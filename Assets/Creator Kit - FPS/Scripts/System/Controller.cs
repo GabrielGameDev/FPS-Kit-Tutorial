@@ -244,7 +244,7 @@ public class Controller : MonoBehaviour
         Cursor.visible = display;
     }
 
-    void PickupWeapon(Weapon prefab)
+    public void PickupWeapon(Weapon prefab)
     {
         //TODO : maybe find a better way than comparing name...
         if (m_Weapons.Exists(weapon => weapon.name == prefab.name))
@@ -262,6 +262,8 @@ public class Controller : MonoBehaviour
             w.PickedUp(this);
             
             m_Weapons.Add(w);
+
+			ChangeWeapon(m_CurrentWeapon + 1);
         }
     }
 

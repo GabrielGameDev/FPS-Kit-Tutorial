@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
+using UnityEngine.AI;
 
 public class Target : MonoBehaviour
 {
     public float health = 5.0f;
     public int pointValue;
+
+	public bool followingPlayer;
 
     public ParticleSystem DestroyedEffect;
 
@@ -27,9 +30,14 @@ public class Target : MonoBehaviour
 	bool playerInRange;
 	PlayerHealth playerHealth;
 
+	NavMeshAgent agent;
+	Transform player;
+	Vector3 startPosition;
+
     void Awake()
     {
         Helpers.RecursiveLayerChange(transform, LayerMask.NameToLayer("Target"));
+		agent = GetComponent<NavMeshAgent>();
     }
 
     void Start()
@@ -42,11 +50,23 @@ public class Target : MonoBehaviour
             IdleSource.time = Random.Range(0.0f, IdleSource.clip.length);
 
 		playerHealth = FindObjectOfType<PlayerHealth>();
+		player = playerHealth.transform;
 
+		startPosition = transform.position;
     }
 
 	private void Update()
 	{
+
+		if (followingPlayer)
+		{
+			agent.SetDestination(player.position);
+		}
+		else
+		{
+			agent.SetDestination(startPosition);
+		}
+
 		if(Time.time > nextAttack && playerInRange)
 		{
 			Attack();

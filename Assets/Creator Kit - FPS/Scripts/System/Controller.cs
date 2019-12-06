@@ -263,7 +263,7 @@ public class Controller : MonoBehaviour
             
             m_Weapons.Add(w);
 
-			ChangeWeapon(m_CurrentWeapon + 1);
+			ChangeWeapon(m_Weapons.Count - 1);
         }
     }
 

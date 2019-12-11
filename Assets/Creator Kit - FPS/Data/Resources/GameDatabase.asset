@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: GameDatabase
   m_EditorClassIdentifier: 
   ammoDatabase:
-    maxId: 4
+    maxId: 5
     entries:
     - name: Medicine phial
       id: 0
     - name: Pill
       id: 2
+    - name: Shotgun
+      id: 4
   episodes:
   - title: Episode
     sceneAssets: []

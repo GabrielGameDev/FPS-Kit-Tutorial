@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class PlayerHealth : MonoBehaviour
 	public float flashSpeed = 2;
 
 	private bool damaged;
+	private bool isDead;
 
     // Start is called before the first frame update
     void Start()
@@ -28,17 +30,35 @@ public class PlayerHealth : MonoBehaviour
 		{
 			damageImage.color = damageColor;
 		}
-		else
+		else if(!damaged && !isDead)
 		{
 			damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+		}
+		else if (isDead)
+		{
+			damageImage.color = Color.Lerp(damageImage.color, Color.black, flashSpeed * Time.deltaTime);
 		}
 		damaged = false;
     }
 
 	public void TakeDamage(int damageAmount)
 	{
+		if (isDead)
+			return;
+
 		currentHealth -= damageAmount;
 		healthSlider.value = currentHealth;
 		damaged = true;
+
+		if(currentHealth <= 0)
+		{
+			isDead = true;
+			Invoke("Death", 3f);
+		}
+	}
+
+	void Death()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 }

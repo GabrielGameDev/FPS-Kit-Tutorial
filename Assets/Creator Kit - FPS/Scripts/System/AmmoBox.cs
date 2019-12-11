@@ -9,11 +9,7 @@ public class AmmoBox : MonoBehaviour
     public int ammoType;
     public int amount;
     
-    void Reset()
-    {
-        gameObject.layer = LayerMask.NameToLayer("PlayerCollisionOnly");
-        GetComponent<Collider>().isTrigger = true;
-    }
+   
 
     void OnTriggerEnter(Collider other)
     {
